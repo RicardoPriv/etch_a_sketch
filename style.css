@@ -10,6 +10,15 @@
 .sketch .options ul {
     display: flex;
     flex-direction: column;
+    gap: 10px;
+    
+}
+
+button {
+    font-size: 36px;
+    color: white;
+    background-color: black;
+    padding: 10px;
 }
 
 .header, .footer .copyright {
