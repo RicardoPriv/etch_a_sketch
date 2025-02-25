@@ -1,4 +1,10 @@
+const DIMENSIONS = 10;
+
 function gridDivide(grid, dimensionsOfGrid) {
+    if (dimensionsOfGrid > 100) {
+        return -1;
+    }
+
     grid.style.display = "grid";
     const cellSize = Math.floor(parseInt(grid.style.width) / dimensionsOfGrid);
 
@@ -7,12 +13,37 @@ function gridDivide(grid, dimensionsOfGrid) {
 
     for (let i = 0; i < dimensionsOfGrid * dimensionsOfGrid; i++) {
             let gridChild = document.createElement("div");
-            gridChild.id = ("Cell" + (i+1));
+            gridChild.id = ("Cell" + i);
             gridChild.style.border = "1px solid black";
             gridChild.style.backgroundColor = "white";
             
             console.log(gridChild.id);
             grid.appendChild(gridChild);
+    }
+}
+
+function removeInnerBorders(grid, dimensionsOfGrid) {
+    let borderStyle = "1px solid black";
+
+    for (let i = 0; i < dimensionsOfGrid * dimensionsOfGrid; i++) {
+        let cell = grid.children[i];
+        cell.style.border = "0";
+
+        if (i < dimensionsOfGrid) {
+            cell.style.borderTop = borderStyle;
+        }
+
+        if (i % dimensionsOfGrid == 0) {
+            cell.style.borderLeft = borderStyle;
+        }
+
+        if (i >= (dimensionsOfGrid * dimensionsOfGrid) - dimensionsOfGrid) {
+            cell.style.borderBottom = borderStyle;
+        }
+
+        if ((i + 1) % dimensionsOfGrid == 0) {
+            cell.style.borderRight = borderStyle;
+        }
     }
 }
 
@@ -39,5 +70,6 @@ window.onload = function main() {
     document.body.style.alignItems = "center";
     document.body.style.height = "100vh";
 
-    gridDivide(grid, 5);
+    gridDivide(grid, DIMENSIONS);
+    removeInnerBorders(grid, DIMENSIONS);
 }
