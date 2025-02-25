@@ -7,11 +7,12 @@
     margin: 0;
 }
 
-.sketch .options ul {
+.sketch .options, ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    
+    justify-content: center;
+    align-items: center;
+    gap: 10px;   
 }
 
 button {
@@ -19,6 +20,8 @@ button {
     color: white;
     background-color: black;
     padding: 10px;
+    width: 300px;
+    border-radius: 16px;
 }
 
 .header, .footer .copyright {
@@ -40,4 +43,23 @@ button {
     height: 100px;
     margin: 16px;
     box-shadow: 0 0 0 16px #1F2937;
+}
+
+.grid-slider {
+    display: flex;
+    gap: 16px;
+}
+
+#slider {
+    height: 20px;
+    width: 250px;
+    border-radius: 5px;
+}
+
+#slider-value {
+    font-weight: 600;
+    background-color: grey;
+    color: white;
+    width: 60px;
+    text-align: center;
 }

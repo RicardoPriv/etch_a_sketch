@@ -13,12 +13,18 @@
     <body>
         <div class="header">Etch-A-Sketch</div>
         
+        <div class="grid-slider">
+            <div id="slider-value">10x10</div>
+            <input type="range" min="1" max="99" value="10" id="slider">
+        </div>
+
         <div class="sketch">
             <div class="options">
                 <ul>
                     <button id="black-button">Black</button>
                     <button id="random-colors">Random Colors</button>
                     <button id="gridlines">Toggle Gridlines</button>
+                    <button id="eraser">Eraser</button>
                     <button id="clear-grid">Clear Grid</button>
                 </ul>
             </div>

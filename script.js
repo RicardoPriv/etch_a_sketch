@@ -1,6 +1,15 @@
-let gridlines = 1;
+let gridlines = true;
 let randomColors = false;
 let RGB = "rgb(0, 0, 0)";
+
+function gridDelete(grid) {
+    while (grid.firstChild) {
+        grid.removeChild(grid.firstChild);
+    }
+
+    grid.style.gridTemplateColumns = "";
+    grid.style.gridTemplateRows = "";
+}
 
 function gridDivide(grid, dimensionsOfGrid) {
     if (dimensionsOfGrid > 100) {
@@ -21,6 +30,17 @@ function gridDivide(grid, dimensionsOfGrid) {
             
             //console.log(gridChild.id);
             grid.appendChild(gridChild);
+    }
+
+    if (!gridlines) {
+        removeInnerBorders(grid);
+    }
+
+    for (let i = 0; i < grid.children.length; i++) {
+        grid.children[i].addEventListener("mouseover", function(e) {
+            if (randomColors) {RGB = randomRGB();}
+            e.target.style.backgroundColor = RGB;    
+        })
     }
 }
 
@@ -70,6 +90,11 @@ function randomRGB() {
     return "rgb(" + red + ", " + blue + ", " + green + ")"; 
 }
 
+function eraseColor() {
+    randomColors = false;
+    RGB = "rgb(255, 255, 255)";
+}
+
 window.onload = function main() {
     console.log("hello world");
 
@@ -78,12 +103,12 @@ window.onload = function main() {
     
     grid.id = "sketchpad";
     grid.style.border = "0";
-    grid.style.width = "200px";
-    grid.style.height = "200px";
+    grid.style.width = "400px";
+    grid.style.height = "400px";
 
     sketch.appendChild(grid);
     sketch.style.display = "flex";
-    sketch.style.gap = "16px";
+    sketch.style.gap = "64px";
     sketch.style.justifyContent = "center";
     sketch.style.alignItems = "center";
 
@@ -93,7 +118,17 @@ window.onload = function main() {
     document.body.style.alignItems = "center";
     document.body.style.height = "100vh";
 
+    let slider = document.querySelector("#slider");
+    let sliderValue = document.querySelector("#slider-value");
+
     gridDivide(grid, 10);
+
+    slider.addEventListener("input", function () {
+        let value = slider.value;
+        sliderValue.innerText = `${value}x${value}`;
+        gridDelete(grid);
+        gridDivide(grid, value);
+    })
     
     document.querySelector("#random-colors").addEventListener("click", function() {
         randomColors = true;    
@@ -112,14 +147,18 @@ window.onload = function main() {
     }
 
     document.querySelector("#gridlines").addEventListener("click", function() {
-        if (gridlines == 1) {
+        if (gridlines) {
             removeInnerBorders(grid);
-            gridlines = 0;
+            gridlines = false;
         }
         else {
             addInnerBorders(grid);
-            gridlines = 1;
+            gridlines = true;
         }
+    })
+
+    document.querySelector("#eraser").addEventListener("click", function() {
+        eraseColor();
     })
 
     document.querySelector("#clear-grid").addEventListener("click", function() {
