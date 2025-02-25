@@ -7,14 +7,12 @@
     margin: 0;
 }
 
-
-
 .sketch .options ul {
     display: flex;
     flex-direction: column;
 }
 
-.header1, .footer .copyright {
+.header, .footer .copyright {
     display: flex;
     justify-content: center;
 
@@ -25,7 +23,7 @@
     padding: 16px;
 }
 
-.header1 {
+.header {
     align-items: center;
 
     font-size: 48px;
