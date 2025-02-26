@@ -1,5 +1,7 @@
 let gridlines = true;
 let randomColors = false;
+let lighten = false;
+let darken = false;
 let RGB = "rgb(0, 0, 0)";
 
 function gridDelete(grid) {
@@ -38,7 +40,19 @@ function gridDivide(grid, dimensionsOfGrid) {
 
     for (let i = 0; i < grid.children.length; i++) {
         grid.children[i].addEventListener("mouseover", function(e) {
+            let currentColor = window.getComputedStyle(e.target).backgroundColor;
+            console.log(editRGB(currentColor, 1, 1, 1));
+        
+            if (lighten) {
+                RGB = editRGB(currentColor, 25, 25, 25);
+            }
+        
+            if (darken) {
+                RGB = editRGB(currentColor, -25, -25, -25);
+            }
+
             if (randomColors) {RGB = randomRGB();}
+            
             e.target.style.backgroundColor = RGB;    
         })
     }
@@ -95,6 +109,16 @@ function eraseColor() {
     RGB = "rgb(255, 255, 255)";
 }
 
+function editRGB(rgbString, redEdit, blueEdit, greenEdit) {
+    let rgbArray = rgbString.replace("rgb(", "").replace(")", "").split(", ");
+
+    let newRed = Math.min(parseInt(rgbArray[0]) + redEdit, 255);
+    let newBlue = Math.min(parseInt(rgbArray[1]) + blueEdit, 255);
+    let newGreen = Math.min(parseInt(rgbArray[2]) + greenEdit, 255);
+
+    return `rgb(${newRed}, ${newBlue}, ${newGreen})`;
+}
+
 window.onload = function main() {
     console.log("hello world");
 
@@ -132,19 +156,15 @@ window.onload = function main() {
     
     document.querySelector("#random-colors").addEventListener("click", function() {
         randomColors = true;    
+        lighten = false;
+        darken = false;
     })
 
     document.querySelector("#black-button").addEventListener("click", function() {
         randomColors = false;
-        RGB = "rgb(0, 0, 0)";
+        lighten = false;
+        darken = false;
     })
-
-    for (let i = 0; i < grid.children.length; i++) {
-        grid.children[i].addEventListener("mouseover", function(e) {
-            if (randomColors) {RGB = randomRGB();}
-            e.target.style.backgroundColor = RGB;    
-        })
-    }
 
     document.querySelector("#gridlines").addEventListener("click", function() {
         if (gridlines) {
@@ -158,7 +178,21 @@ window.onload = function main() {
     })
 
     document.querySelector("#eraser").addEventListener("click", function() {
+        lighten = false;
+        darken = false;
         eraseColor();
+    })
+
+    document.querySelector("#lighten").addEventListener("click", function() {
+        randomColors = false;
+        darken = false;
+        lighten = true;
+    })
+
+    document.querySelector("#darken").addEventListener("click", function() {
+        randomColors = false;
+        lighten = false
+        darken = true;
     })
 
     document.querySelector("#clear-grid").addEventListener("click", function() {
