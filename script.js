@@ -41,16 +41,9 @@ function gridDivide(grid, dimensionsOfGrid) {
     for (let i = 0; i < grid.children.length; i++) {
         grid.children[i].addEventListener("mouseover", function(e) {
             let currentColor = window.getComputedStyle(e.target).backgroundColor;
-            console.log(editRGB(currentColor, 1, 1, 1));
         
-            if (lighten) {
-                RGB = editRGB(currentColor, 25, 25, 25);
-            }
-        
-            if (darken) {
-                RGB = editRGB(currentColor, -25, -25, -25);
-            }
-
+            if (lighten) {RGB = editRGB(currentColor, 25, 25, 25);}
+            if (darken) {RGB = editRGB(currentColor, -25, -25, -25);}
             if (randomColors) {RGB = randomRGB();}
             
             e.target.style.backgroundColor = RGB;    
@@ -120,8 +113,6 @@ function editRGB(rgbString, redEdit, blueEdit, greenEdit) {
 }
 
 window.onload = function main() {
-    console.log("hello world");
-
     let sketch = document.querySelector(".sketch");
     let grid = document.createElement("div");
     
